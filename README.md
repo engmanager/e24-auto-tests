@@ -61,5 +61,5 @@ The Bash script builds the Playwright base image once,
 and then uses it to build and run a container with the latest tests.
 
 ```bash
-BASE_URL=url TEST_USER_NAME=your_username TEST_USER_PASSWORD=your_password ./run_in_docker.sh
+BASE_URL=url TEST_USER_NAME=your_username TEST_USER_PASSWORD=your_password ./test-in-docker.sh
 
