@@ -4,7 +4,7 @@ This project contains automated UI tests for the **EM24** platform, written in *
 
 ## 🔧 Tech Stack
 
-- Java 23
+- Java 22
 - Playwright for Java (v1.52.0)
 - JUnit 5 (v5.9.2)
 - Maven
@@ -36,4 +36,21 @@ Clone the repo and run tests with Maven:
 git clone https://github.com/engmanager/e24-auto-tests.git
 cd e24-auto-tests
 mvn test
+```
+
+## 🐳 Running Tests in Docker
+
+### 🔧 Build the Docker Image
+
+```bash
+docker build -t em24-tests .
+```
+
+### Run in Docker
+```bash
+docker run --rm \
+  -e BASE_URL=url \
+  -e TEST_USER_NAME=your_username \
+  -e TEST_USER_PASSWORD=your_password \
+  em24-tests
 ```

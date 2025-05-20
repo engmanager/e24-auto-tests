@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/playwright:v1.52.0-noble
+
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y wget gnupg curl maven
+
+# Set working directory
+WORKDIR /app
+
+# Create directories for test artifacts
+RUN mkdir -p target/videos target/traces
+
+# Copy pom.xml separately to leverage Docker cache
+COPY pom.xml .
+
+# Download dependencies separately to leverage Docker cache
+RUN mvn dependency:go-offline
+
+# Copy the rest of the project
+COPY src/ ./src/
+
+# Run tests
+CMD ["mvn", "test"]
