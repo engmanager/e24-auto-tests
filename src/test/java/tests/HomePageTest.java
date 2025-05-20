@@ -1,11 +1,7 @@
 package tests;
-
-
 import org.junit.jupiter.api.*;
 import pages.Em24HomePage;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class HomePageTest extends BaseTest {
 

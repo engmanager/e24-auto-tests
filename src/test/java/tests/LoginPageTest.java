@@ -6,6 +6,7 @@ import pages.Em24LoginPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 public class LoginPageTest extends BaseTest {
 
 

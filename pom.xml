@@ -53,6 +53,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
+                <configuration>
+                    <parallel>classes</parallel> <!-- or "classes", or "both" -->
+                    <useUnlimitedThreads>false</useUnlimitedThreads>
+                    <perCoreThreadCount>true</perCoreThreadCount>
+                    <threadCount>1</threadCount> <!-- override to set exact number -->
+                </configuration>
             </plugin>
         </plugins>
     </build>

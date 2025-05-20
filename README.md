@@ -24,7 +24,7 @@ Before running the tests, set the following environment variables:
 
 ```bash
 export BASE_URL=https://emanagement24.com
-export TEST_USER_NAME=java@auto.test
+export TEST_USER_NAME=user_name
 export TEST_USER_PASSWORD=add_you_password
 ```
 

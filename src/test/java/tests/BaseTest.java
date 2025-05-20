@@ -2,28 +2,51 @@ package tests;
 
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
+
+import java.nio.file.Paths;
+import java.util.UUID;
+
 import pages.BasePage;
 
 public class BaseTest {
-    protected static Playwright playwright;
-    protected static Browser browser;
-
+    protected Playwright playwright;
+    protected Browser browser;
     protected BrowserContext context;
     protected Page page;
 
     public String userName = System.getenv("TEST_USER_NAME");
     public String password = System.getenv("TEST_USER_PASSWORD");
 
-    @BeforeAll
-    static void launchBrowser() {
-        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
-                .setHeadless(false);
+    @BeforeEach
+    void setupTest() {
         playwright = Playwright.create();
+
+        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
+                .setHeadless(Boolean.parseBoolean(System.getProperty("headless", "false")));
+
         browser = playwright.chromium().launch(launchOptions);
+
+        Browser.NewContextOptions contextOptions = new Browser.NewContextOptions()
+                .setRecordVideoDir(Paths.get("target/videos/" + UUID.randomUUID().toString()));
+
+        context = browser.newContext(contextOptions);
+
+        context.tracing().start(new Tracing.StartOptions()
+                .setScreenshots(true)
+                .setSnapshots(true));
+
+        page = context.newPage();
     }
 
-    @AfterAll
-    static void closeBrowser() {
+    @AfterEach
+    void tearDown() {
+        if (context != null) {
+            String testName = getClass().getSimpleName();
+            context.tracing().stop(new Tracing.StopOptions()
+                    .setPath(Paths.get("target/traces/" + testName + "-" + UUID.randomUUID() + ".zip")));
+            context.close();
+        }
+
         if (browser != null) {
             browser.close();
         }
@@ -31,20 +54,6 @@ public class BaseTest {
             playwright.close();
         }
     }
-
-    @BeforeEach
-    void createContextAndPage() {
-        context = browser.newContext();
-        page = context.newPage();
-    }
-
-    @AfterEach
-    void closeContext() {
-        if (context != null) {
-            context.close();
-        }
-    }
-
 
     protected <T extends BasePage> T getPage(Class<T> pageClass) {
         try {
