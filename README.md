@@ -4,7 +4,7 @@ This project contains automated UI tests for the **EM24** platform, written in *
 
 ## 🔧 Tech Stack
 
-- Java 22
+- Java 21
 - Playwright for Java (v1.52.0)
 - JUnit 5 (v5.9.2)
 - Maven
@@ -54,3 +54,12 @@ docker run --rm \
   -e TEST_USER_PASSWORD=your_password \
   em24-tests
 ```
+
+### Run in Docker using bash script
+
+The Bash script builds the Playwright base image once,  
+and then uses it to build and run a container with the latest tests.
+
+```bash
+BASE_URL=url TEST_USER_NAME=your_username TEST_USER_PASSWORD=your_password ./run_in_docker.sh
+

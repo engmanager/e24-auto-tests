@@ -17,8 +17,5 @@ COPY pom.xml .
 # Download dependencies separately to leverage Docker cache
 RUN mvn dependency:go-offline
 
-# Copy the rest of the project
-COPY src/ ./src/
-
 # Run tests
 CMD ["mvn", "test"]

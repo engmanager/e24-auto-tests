@@ -1,0 +1,4 @@
+FROM em24-playwright
+
+# Copy the rest of the project
+COPY src/ ./src/
