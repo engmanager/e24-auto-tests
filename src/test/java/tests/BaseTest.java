@@ -14,6 +14,9 @@ public class BaseTest {
     protected BrowserContext context;
     protected Page page;
 
+    protected String headlessEnv = System.getenv("HEADLESS");
+    protected String setHeadless = (headlessEnv == null || headlessEnv.isEmpty()) ? "true" : headlessEnv;
+
     public String userName = System.getenv("TEST_USER_NAME");
     public String password = System.getenv("TEST_USER_PASSWORD");
 
@@ -22,7 +25,7 @@ public class BaseTest {
         playwright = Playwright.create();
 
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
-                .setHeadless(Boolean.parseBoolean(System.getProperty("headless", "false")));
+                .setHeadless(Boolean.parseBoolean(setHeadless));
 
         browser = playwright.chromium().launch(launchOptions);
 
